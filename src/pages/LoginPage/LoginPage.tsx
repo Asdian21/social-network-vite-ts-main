@@ -10,6 +10,19 @@ import "./LoginPage.scss";
 import { StyleLoginPage } from "./LogiPage.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { changeUser } from "../../store/userSlice";
+import { useEffect } from "react";
+
+const mockeUser = {
+  mail: "asdiank7@gmail.com",
+  phone_number: "+998909013281",
+  user_id: 266,
+  name: "Yedixanov Said Jasurovich",
+  reg_date: new Date(),
+  city: "Tashkent",
+};
 
 interface ILoginForm {
   userEmail: string;
@@ -28,7 +41,17 @@ const loginFormScheme = yup.object({
 });
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.userSlice.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Перенесено внутрь компонента
+
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/profile-page");
+    }
+  }, [user, navigate]); // добавляем navigate в зависимости для useEffect
 
   const {
     control,
@@ -43,18 +66,22 @@ export const LoginPage = () => {
   });
 
   const onLoginSubmit: SubmitHandler<ILoginForm> = (data) => {
-    
+    dispatch(changeUser(mockeUser));
     const savedEmail = localStorage.getItem("userEmail");
-const savedPassword = localStorage.getItem("userPassword");
+    const savedPassword = localStorage.getItem("userPassword");
 
-if (savedEmail && savedPassword && data.userEmail === savedEmail && data.userPassword === savedPassword) {
-  console.log("Успешный вход");
-  navigate("/main-page");
-} else {
-  console.log("Неверный email или пароль");
-  alert("Неверный email или пароль");
-}
-
+    if (
+      savedEmail &&
+      savedPassword &&
+      data.userEmail === savedEmail &&
+      data.userPassword === savedPassword
+    ) {
+      console.log("Успешный вход");
+      navigate("/main-page");
+    } else {
+      console.log("Неверный email или пароль");
+      alert("Неверный email или пароль");
+    }
   };
 
   return (
