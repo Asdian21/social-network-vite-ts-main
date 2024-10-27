@@ -11,10 +11,10 @@ interface SInterFaceProps {
 export const StyleInput = styled.input<SInterFaceProps>`
   display: block;
   width: 100%;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   background-color: transparent;
   &:last-child {
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
   }
   &:is(:hover, :focus) {
     border-color: ${(props) => props.theme.colors.primeColor};
