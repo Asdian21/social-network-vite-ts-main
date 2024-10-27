@@ -6,6 +6,10 @@ import { RootState } from "../../store/store";
 import { Heading } from "../../components/Header/Heading";
 import { UserElem } from "../../components/Aside/List/UserElem";
 import NavbarItem from "../../components/Aside/Navbar/NavbarItem";
+import { ProfileHeaderSvg } from "../../components/Profile/ProfileHeader/ProfileHeaderSvg";
+import { UserImg } from "../../components/Profile/ProfileHeader/UserBlock/UserImg";
+import { UserParameter } from "../../components/Profile/ProfileHeader/UserBlock/UserParameter";
+import { Button } from "../../components/UI/Button/Button";
 
 export const ProfilePage = () => {
   const navbarItems = [
@@ -144,6 +148,21 @@ export const ProfilePage = () => {
     },
   ];
 
+  const userInfo = [
+    {
+      parameterName: "Друзья",
+      parameterValue: 130,
+    },
+    {
+      parameterName: "Подписчики",
+      parameterValue: 923,
+    },
+    {
+      parameterName: "Подписки",
+      parameterValue: 246,
+    },
+  ];
+
   const user = useSelector((state: RootState) => state.userSlice.user);
   console.log(user);
 
@@ -182,40 +201,37 @@ export const ProfilePage = () => {
           </div>
         </aside>
         <div className="ProfileHeader">
-          <svg
-            className="icon icon-edit"
+          <ProfileHeaderSvg
+            iconName="icon-edit"
             viewBox="0 0 50 50"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              id="icon"
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50ZM33.0775 11.2929C32.687 10.9024 32.0538 10.9024 31.6633 11.2929L27.9599 14.9963L27.9596 14.9966L27.9592 14.9969L13.1447 29.8114C13.0246 29.9316 12.937 30.0804 12.8903 30.2438L11.0385 36.7253C10.9387 37.0745 11.0361 37.4503 11.2929 37.7071C11.5497 37.9639 11.9255 38.0613 12.2747 37.9615L18.7562 36.1097C18.9196 36.063 19.0684 35.9754 19.1886 35.8553L34.003 21.0408L34.0034 21.0404L34.0038 21.0401L37.7071 17.3367C38.0976 16.9462 38.0976 16.313 37.7071 15.9225L33.0775 11.2929ZM15.2661 30.5185L28.6667 17.1179L31.8821 20.3333L18.4815 33.7339L15.2661 30.5185ZM30.0809 15.7037L33.2963 18.9191L35.5858 16.6296L32.3704 13.4142L30.0809 15.7037ZM14.3465 32.4274L16.5726 34.6535L13.456 35.544L14.3465 32.4274Z"
-            />
-          </svg>
+            pathData="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50ZM33.0775 11.2929C32.687 10.9024 32.0538 10.9024 31.6633 11.2929L27.9599 14.9963L27.9596 14.9966L27.9592 14.9969L13.1447 29.8114C13.0246 29.9316 12.937 30.0804 12.8903 30.2438L11.0385 36.7253C10.9387 37.0745 11.0361 37.4503 11.2929 37.7071C11.5497 37.9639 11.9255 38.0613 12.2747 37.9615L18.7562 36.1097C18.9196 36.063 19.0684 35.9754 19.1886 35.8553L34.003 21.0408L34.0034 21.0404L34.0038 21.0401L37.7071 17.3367C38.0976 16.9462 38.0976 16.313 37.7071 15.9225L33.0775 11.2929ZM15.2661 30.5185L28.6667 17.1179L31.8821 20.3333L18.4815 33.7339L15.2661 30.5185ZM30.0809 15.7037L33.2963 18.9191L35.5858 16.6296L32.3704 13.4142L30.0809 15.7037ZM14.3465 32.4274L16.5726 34.6535L13.456 35.544L14.3465 32.4274Z"
+          />
           <div className="user__block">
-            <img src="./img/users/denis-frolov.jpeg" alt="Denis Frolov" />
+            <UserImg
+              imgSourse="./img/users/denis-frolov.jpeg"
+              userAlt="Denis Frolov"
+            />
             <div className="user__description">
-              <h1 className="user__name">Денис Фролов</h1>
+              <Heading
+                headingText="Денис Фролов"
+                headingType="h1"
+                className="user__name"
+              />
               <div className="user__info">
-                <div className="parameter">
-                  <span className="key">Друзья</span>
-                  <span className="value">130</span>
-                </div>
-                <div className="parameter">
-                  <span className="key">Подписчики</span>
-                  <span className="value">923</span>
-                </div>
-                <div className="parameter">
-                  <span className="key">Подписки</span>
-                  <span className="value">246</span>
-                </div>
+                {userInfo.map((elem) => (
+                  <UserParameter
+                    parameterName={elem.parameterName}
+                    parameterValue={elem.parameterValue}
+                  />
+                ))}
               </div>
             </div>
             <div className="buttons-wrapper">
-              <button className="secondary">Редактировать профиль</button>
-              <button className="primary">Добавить историю</button>
+              <Button
+                isPrimary={false}
+                buttonText="Редактировать профиль"
+              ></Button>
+              <Button isPrimary buttonText="Добавить историю"></Button>
             </div>
           </div>
           <div className="profile-background"></div>
