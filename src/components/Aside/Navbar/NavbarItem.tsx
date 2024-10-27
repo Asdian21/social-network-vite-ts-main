@@ -1,3 +1,5 @@
+import "./Navbar.scss";
+
 type TNavbarItem = {
   iconClass: string;
   viewBox: string;
@@ -5,9 +7,16 @@ type TNavbarItem = {
   secondPath?: string;
   name: string;
   badgeCount: number;
-}
+};
 
-const NavbarItem = ({ iconClass, viewBox, pathData, secondPath, name, badgeCount }:TNavbarItem) => {
+const NavbarItem = ({
+  iconClass,
+  viewBox,
+  pathData,
+  secondPath,
+  name,
+  badgeCount,
+}: TNavbarItem) => {
   // render({ iconClass, viewBox, pathData, name, badgeCount }) {
   return (
     <li className="navbar__item">

@@ -6,7 +6,7 @@ interface StyledButtonProps {
 
 export const SButton = styled.button<StyledButtonProps>`
   width: 100%;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   cursor: pointer;
   padding: 12px 15px;
   font-size: inherit;
@@ -48,5 +48,4 @@ export const SButton = styled.button<StyledButtonProps>`
   @media (max-width: 730px) {
     padding: 10px 12px;
   }
-  
 `;

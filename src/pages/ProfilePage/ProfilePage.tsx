@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
+import { StyleProfilePage } from "./ProfilePage.style";
 import { Header } from "../../components/Header/Header";
 import { Container } from "../../components/UI/Container/container.style";
-import "./ProfilePage.scss";
 import { RootState } from "../../store/store";
 import { Heading } from "../../components/Header/Heading";
 import { UserElem } from "../../components/Aside/List/UserElem";
@@ -22,9 +22,13 @@ import { CommentBlockSvg } from "../../components/Main/PostRepost/CommentBlockSv
 import { CommentDescription } from "../../components/Main/PostRepost/CommentDescription";
 import { Span } from "../../components/Main/PostRepost/Span";
 import { RepostSvg } from "../../components/Main/PostRepost/RepostSvg";
-import { UserTabs } from "../../components/Profile/Main/UserPosts/UserPostsControls/UserTabs";
-import { UploadMedia } from "../../components/Profile/Main/UserPosts/UserPostsControls/UploadMedia";
-import { ShowAll } from "../../components/Profile/Main/UserPosts/UserPostsControls/ShowAll";
+import { UserTabs } from "../../components/Profile/Main/UserTabs";
+import { UploadMedia } from "../../components/Profile/Main/UploadMedia";
+import { ShowAll } from "../../components/Profile/Main/ShowAll";
+import { MusicElem } from "../../components/Aside/List/MusicElem";
+import { DataItem } from "../../components/Profile/RightSide/Bio/BioData/DataItem";
+import { InfoParagraph } from "../../components/Profile/RightSide/Bio/BioInfo/InfoParagraph";
+import { Friend } from "../../components/Profile/RightSide/FriendsBlock/Friend";
 
 export const ProfilePage = () => {
   const navbarItems = [
@@ -295,374 +299,379 @@ export const ProfilePage = () => {
     },
   ];
 
+  const musicBlock = [
+    {
+      musicElemImg: "./img/music/album-1.png",
+      mainText: "Pieces",
+      secondaryText: "Andrew Belle",
+    },
+    {
+      musicElemImg: "./img/music/album-2.png",
+      mainText: "In the Wind",
+      secondaryText: "On-The-Go",
+    },
+    {
+      musicElemImg: "./img/music/album-3.png",
+      mainText: "On you own",
+      secondaryText: "Melt",
+    },
+    {
+      musicElemImg: "./img/music/album-4.png",
+      mainText: "Infinity",
+      secondaryText: "James Young",
+    },
+    {
+      musicElemImg: "./img/music/album-5.png",
+      mainText: "Let me follow",
+      secondaryText: "Son Lux",
+    },
+    {
+      musicElemImg: "./img/music/album-6.png",
+      mainText: "Youth",
+      secondaryText: "Glass Animals",
+    },
+  ];
+
+  const bioData = [
+    {
+      className: "icon-birthday",
+      viewBox: "0 0 21 24",
+      pathData:
+        "M7.81348 3.225L9.24082 6H6.23438C5.32793 6 4.59375 5.16094 4.59375 4.125C4.59375 3.08906 5.32793 2.25 6.23438 2.25H6.32461C6.93574 2.25 7.50586 2.62031 7.81348 3.225ZM2.625 4.125C2.625 4.8 2.76855 5.4375 3.01875 6H1.3125C0.586523 6 0 6.67031 0 7.5V10.5C0 11.3297 0.586523 12 1.3125 12H19.6875C20.4135 12 21 11.3297 21 10.5V7.5C21 6.67031 20.4135 6 19.6875 6H17.9812C18.2314 5.4375 18.375 4.8 18.375 4.125C18.375 1.84687 16.759 0 14.7656 0H14.6754C13.367 0 12.1529 0.792188 11.4885 2.08125L10.5 4.00781L9.51152 2.08594C8.84707 0.792188 7.63301 0 6.32461 0H6.23438C4.24102 0 2.625 1.84687 2.625 4.125ZM16.4062 4.125C16.4062 5.16094 15.6721 6 14.7656 6H11.7592L13.1865 3.225C13.4982 2.62031 14.0643 2.25 14.6754 2.25H14.7656C15.6721 2.25 16.4062 3.08906 16.4062 4.125ZM1.3125 13.5V21.75C1.3125 22.9922 2.19434 24 3.28125 24H9.1875V13.5H1.3125ZM11.8125 24H17.7188C18.8057 24 19.6875 22.9922 19.6875 21.75V13.5H11.8125V24Z",
+      mainText: "День рождения: ",
+      subText: "9 августа",
+    },
+    {
+      className: "icon-location",
+      viewBox: "0 0 19 24",
+      pathData:
+        "M9.5 12C10.1531 12 10.7124 11.7648 11.1779 11.2944C11.6434 10.824 11.8758 10.2592 11.875 9.6C11.875 8.94 11.6423 8.3748 11.1767 7.9044C10.7112 7.434 10.1523 7.1992 9.5 7.2C8.84688 7.2 8.28756 7.4352 7.82206 7.9056C7.35656 8.376 7.12421 8.9408 7.125 9.6C7.125 10.26 7.35775 10.8252 7.82325 11.2956C8.28875 11.766 8.84767 12.0008 9.5 12ZM9.5 24C6.31354 21.26 3.93379 18.7152 2.36075 16.3656C0.787708 14.016 0.000791667 11.8408 0 9.84C0 6.84 0.955146 4.45 2.86544 2.67C4.77573 0.89 6.98725 0 9.5 0C12.0135 0 14.2255 0.89 16.1357 2.67C18.046 4.45 19.0008 6.84 19 9.84C19 11.84 18.2131 14.0152 16.6392 16.3656C15.0654 18.716 12.6857 21.2608 9.5 24Z",
+      mainText: "Город: ",
+      subText: "Ташкент",
+    },
+    {
+      className: "icon-heart",
+      viewBox: "0 0 23 23",
+      pathData:
+        "M11.5 23L9.8325 21.3455C3.91 15.4921 0 11.6191 0 6.89373C0 3.02071 2.783 0 6.325 0C8.326 0 10.2465 1.01526 11.5 2.60708C12.7535 1.01526 14.674 0 16.675 0C20.217 0 23 3.02071 23 6.89373C23 11.6191 19.09 15.4921 13.1675 21.3455L11.5 23Z",
+      mainText: "Статус: ",
+      subText: "Не указано",
+    },
+  ];
+
+  const bioInfo = [
+    {
+      subjectClass: "education",
+      mainText: "Образование",
+      subText: "Филиал университета нефти и газа им. Губкина в Ташкенте",
+    },
+    {
+      subjectClass: "activity",
+      mainText: "Деятельность",
+      subText: "Фотограф",
+    },
+    {
+      subjectClass: "hobby",
+      mainText: "Хобби",
+      subText: "Танцы",
+    },
+  ];
+
+  const friendsList = [
+    {
+      friendImg: "./img/users/aleksandr-maykov.jpeg",
+      friendName: "Александр",
+    },
+    {
+      friendImg: "./img/users/sofia-kodra.jpeg",
+      friendName: "Софья",
+    },
+    {
+      friendImg: "./img/users/andrey-kashirskiy.jpeg",
+      friendName: "Андрей",
+    },
+    {
+      friendImg: "./img/users/darya-gertner.jpeg",
+      friendName: "Дарья",
+    },
+    {
+      friendImg: "./img/users/denis-frolov.jpeg",
+      friendName: "Денис",
+    },
+    {
+      friendImg: "./img/users/mark-krahmalev.jpeg",
+      friendName: "Марк",
+    },
+    {
+      friendImg: "./img/users/katarina-fisher.jpeg",
+      friendName: "Катарина",
+    },
+    {
+      friendImg: "./img/users/viktoria.jpeg",
+      friendName: "Виктория",
+    },
+    {
+      friendImg: "./img/users/gleb.jpeg",
+      friendName: "Глеб",
+    },
+  ];
+
   const user = useSelector((state: RootState) => state.userSlice.user);
   console.log(user);
 
   return (
     <Container>
-      <Header />
-      <div className="ProfilePage">
-        <aside className="LeftSide">
-          <nav className="Navbar">
-            <ul className="navbar__list">
-              {navbarItems.map((elem) => (
-                <NavbarItem
-                  iconClass={elem.iconClass}
-                  viewBox={elem.viewBox}
-                  pathData={elem.pathData}
-                  secondPath={elem.secondPath}
-                  name={elem.name}
+      <StyleProfilePage>
+        <Header />
+        <div className="ProfilePage">
+          <aside className="LeftSide">
+            <nav className="Navbar">
+              <ul className="navbar__list">
+                {navbarItems.map((elem) => (
+                  <NavbarItem
+                    iconClass={elem.iconClass}
+                    viewBox={elem.viewBox}
+                    pathData={elem.pathData}
+                    secondPath={elem.secondPath}
+                    name={elem.name}
+                    badgeCount={elem.badgeCount}
+                  />
+                ))}
+              </ul>
+            </nav>
+            <div className="List">
+              <div className="List__title">
+                <Heading headingText="Подписки" headingType="h2" />
+                <span className="count">123</span>
+              </div>
+              {userElems.map((elem) => (
+                <UserElem
+                  userElemImg={elem.userElemImg}
+                  mainText={elem.mainText}
+                  secondaryText={elem.secondaryText}
                   badgeCount={elem.badgeCount}
                 />
               ))}
-            </ul>
-          </nav>
-          <div className="List">
-            <div className="List__title">
-              <Heading headingText="Подписки" headingType="h2" />
-              <span className="count">123</span>
             </div>
-            {userElems.map((elem) => (
-              <UserElem
-                userElemImg={elem.userElemImg}
-                mainText={elem.mainText}
-                secondaryText={elem.secondaryText}
-                badgeCount={elem.badgeCount}
-              />
-            ))}
-          </div>
-        </aside>
-        <div className="ProfileHeader">
-          <ProfileHeaderSvg
-            iconName="icon-edit"
-            viewBox="0 0 50 50"
-            pathData="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50ZM33.0775 11.2929C32.687 10.9024 32.0538 10.9024 31.6633 11.2929L27.9599 14.9963L27.9596 14.9966L27.9592 14.9969L13.1447 29.8114C13.0246 29.9316 12.937 30.0804 12.8903 30.2438L11.0385 36.7253C10.9387 37.0745 11.0361 37.4503 11.2929 37.7071C11.5497 37.9639 11.9255 38.0613 12.2747 37.9615L18.7562 36.1097C18.9196 36.063 19.0684 35.9754 19.1886 35.8553L34.003 21.0408L34.0034 21.0404L34.0038 21.0401L37.7071 17.3367C38.0976 16.9462 38.0976 16.313 37.7071 15.9225L33.0775 11.2929ZM15.2661 30.5185L28.6667 17.1179L31.8821 20.3333L18.4815 33.7339L15.2661 30.5185ZM30.0809 15.7037L33.2963 18.9191L35.5858 16.6296L32.3704 13.4142L30.0809 15.7037ZM14.3465 32.4274L16.5726 34.6535L13.456 35.544L14.3465 32.4274Z"
-          />
-          <div className="user__block">
-            <UserImg
-              imgSourse="./img/users/denis-frolov.jpeg"
-              userAlt="Denis Frolov"
+          </aside>
+          <div className="ProfileHeader">
+            <ProfileHeaderSvg
+              iconName="icon-edit"
+              viewBox="0 0 50 50"
+              pathData="M25 50C38.8071 50 50 38.8071 50 25C50 11.1929 38.8071 0 25 0C11.1929 0 0 11.1929 0 25C0 38.8071 11.1929 50 25 50ZM33.0775 11.2929C32.687 10.9024 32.0538 10.9024 31.6633 11.2929L27.9599 14.9963L27.9596 14.9966L27.9592 14.9969L13.1447 29.8114C13.0246 29.9316 12.937 30.0804 12.8903 30.2438L11.0385 36.7253C10.9387 37.0745 11.0361 37.4503 11.2929 37.7071C11.5497 37.9639 11.9255 38.0613 12.2747 37.9615L18.7562 36.1097C18.9196 36.063 19.0684 35.9754 19.1886 35.8553L34.003 21.0408L34.0034 21.0404L34.0038 21.0401L37.7071 17.3367C38.0976 16.9462 38.0976 16.313 37.7071 15.9225L33.0775 11.2929ZM15.2661 30.5185L28.6667 17.1179L31.8821 20.3333L18.4815 33.7339L15.2661 30.5185ZM30.0809 15.7037L33.2963 18.9191L35.5858 16.6296L32.3704 13.4142L30.0809 15.7037ZM14.3465 32.4274L16.5726 34.6535L13.456 35.544L14.3465 32.4274Z"
             />
-            <div className="user__description">
-              <Heading
-                headingText="Денис Фролов"
-                headingType="h1"
-                className="user__name"
+            <div className="user__block">
+              <UserImg
+                imgSourse="./img/users/denis-frolov.jpeg"
+                userAlt="Denis Frolov"
               />
-              <div className="user__info">
-                {userInfo.map((elem) => (
-                  <UserParameter
-                    parameterName={elem.parameterName}
-                    parameterValue={elem.parameterValue}
-                  />
-                ))}
+              <div className="user__description">
+                <Heading
+                  headingText="Денис Фролов"
+                  headingType="h1"
+                  className="user__name"
+                />
+                <div className="user__info">
+                  {userInfo.map((elem) => (
+                    <UserParameter
+                      parameterName={elem.parameterName}
+                      parameterValue={elem.parameterValue}
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="buttons-wrapper">
+                <Button
+                  isPrimary={false}
+                  buttonText="Редактировать профиль"
+                ></Button>
+                <Button isPrimary buttonText="Добавить историю"></Button>
               </div>
             </div>
-            <div className="buttons-wrapper">
-              <Button
-                isPrimary={false}
-                buttonText="Редактировать профиль"
-              ></Button>
-              <Button isPrimary buttonText="Добавить историю"></Button>
-            </div>
+            <div className="profile-background"></div>
           </div>
-          <div className="profile-background"></div>
-        </div>
-        <main className="Main">
-          <div className="WhatsNew">
-            <ImgArina />
-            <Input
-              type="text"
-              name="whats-new"
-              id="whats-new"
-              placeholder="Что у вас нового?"
-            />
-            <div className="icons-wrapper">
-              {whatsNew.map((elem) => (
-                <WhatsNewIcons
-                  iconType={elem.iconType}
-                  viewBoxNum={elem.viewBoxNum}
-                  pathData={elem.pathData}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="UserPosts">
-            <div className="UserPosts__controls">
-              <div className="tabs">
-                {tabs.map((elem) => (
-                  <UserTabs
-                    divClassName={elem.divClassName}
-                    svgClassName={elem.svgClassName}
-                    id={elem.id}
+          <main className="Main">
+            <div className="WhatsNew">
+              <ImgArina />
+              <Input
+                type="text"
+                name="whats-new"
+                id="whats-new"
+                placeholder="Что у вас нового?"
+              />
+              <div className="icons-wrapper">
+                {whatsNew.map((elem) => (
+                  <WhatsNewIcons
+                    iconType={elem.iconType}
+                    viewBoxNum={elem.viewBoxNum}
                     pathData={elem.pathData}
-                    spanName={elem.spanName}
                   />
                 ))}
               </div>
-              <UploadMedia spanName="Загрузить фото" />
             </div>
-            <div className="media-container">
-              {topCenterMediaContainer.map((elem) => (
-                <PostMediaItem imgPost={elem.imgPost} />
-              ))}
+            <div className="UserPosts">
+              <div className="UserPosts__controls">
+                <div className="tabs">
+                  {tabs.map((elem) => (
+                    <UserTabs
+                      divClassName={elem.divClassName}
+                      svgClassName={elem.svgClassName}
+                      id={elem.id}
+                      pathData={elem.pathData}
+                      spanName={elem.spanName}
+                    />
+                  ))}
+                </div>
+                <UploadMedia spanName="Загрузить фото" />
+              </div>
+              <div className="media-container">
+                {topCenterMediaContainer.map((elem) => (
+                  <PostMediaItem imgPost={elem.imgPost} />
+                ))}
+              </div>
+              <ShowAll spanText="Показать все" />
             </div>
-            <ShowAll spanText="Показать все" />
-          </div>
-          <div className="Post _liked _marked">
-            <PostUserElem
-              userElemImg="./img/users/aleksandr-maykov.jpeg"
-              mainText="Александр Майков"
-              secondaryText="Сегодня в 9:37"
-            />
-            <PostText postText="Момент умиротворения и спокойствия" />
-            <div className="media-container">
-              {mediaContainer.map((elem) => (
-                <PostMediaItem imgPost={elem.imgPost} />
-              ))}
-            </div>
-            <div className="PostControls">
-              {postControls.map((elem) => (
-                <PostIconWrapper
-                  iconWrap={elem.iconWrap}
-                  whatCount={elem.whatCount}
-                  count={elem.count}
-                  className={elem.className}
-                  viewBox={elem.viewBox}
-                  pathData={elem.pathData}
-                  color={elem.fill}
-                />
-              ))}
-            </div>
-            <div className="CommentBlock">
-              <CommentBlockImg />
-              <CommentDescription
-                owner="Карина Савина"
-                text="Это текст комментария"
-                reply="Ответить"
-              />
-              <Span />
-              <CommentBlockSvg />
-            </div>
-            <RepostSvg className="icon-more" />
-          </div>
-          <div className="Post Repost _liked _marked">
-            <PostUserElem
-              userElemImg="./img/users/mark-krahmalev.jpeg"
-              mainText="Марк Крахмалев"
-              secondaryText="20 марта 23:31"
-            />
-            <div className="Repost__wrapper">
+            <div className="Post _liked _marked">
               <PostUserElem
                 userElemImg="./img/users/aleksandr-maykov.jpeg"
                 mainText="Александр Майков"
-                secondaryText="Сегодня 9:37"
+                secondaryText="Сегодня в 9:37"
               />
+              <PostText postText="Момент умиротворения и спокойствия" />
               <div className="media-container">
-                <PostMediaItem imgPost="./img/post/garnet-man.png" />
-                <PostMediaItem imgPost="./img/post/garnet.png" />
+                {mediaContainer.map((elem) => (
+                  <PostMediaItem imgPost={elem.imgPost} />
+                ))}
+              </div>
+              <div className="PostControls">
+                {postControls.map((elem) => (
+                  <PostIconWrapper
+                    iconWrap={elem.iconWrap}
+                    whatCount={elem.whatCount}
+                    count={elem.count}
+                    className={elem.className}
+                    viewBox={elem.viewBox}
+                    pathData={elem.pathData}
+                    color={elem.fill}
+                  />
+                ))}
+              </div>
+              <div className="CommentBlock">
+                <CommentBlockImg />
+                <CommentDescription
+                  owner="Карина Савина"
+                  text="Это текст комментария"
+                  reply="Ответить"
+                />
+                <Span />
+                <CommentBlockSvg />
+              </div>
+              <RepostSvg className="icon-more" />
+            </div>
+            <div className="Post Repost _liked _marked">
+              <PostUserElem
+                userElemImg="./img/users/mark-krahmalev.jpeg"
+                mainText="Марк Крахмалев"
+                secondaryText="20 марта 23:31"
+              />
+              <div className="Repost__wrapper">
+                <PostUserElem
+                  userElemImg="./img/users/aleksandr-maykov.jpeg"
+                  mainText="Александр Майков"
+                  secondaryText="Сегодня 9:37"
+                />
+                <div className="media-container">
+                  <PostMediaItem imgPost="./img/post/garnet-man.png" />
+                  <PostMediaItem imgPost="./img/post/garnet.png" />
+                </div>
+              </div>
+              <div className="PostControls">
+                {postControls.map((elem) => (
+                  <PostIconWrapper
+                    iconWrap={elem.iconWrap}
+                    whatCount={elem.whatCount}
+                    count={elem.count}
+                    className={elem.className}
+                    viewBox={elem.viewBox}
+                    pathData={elem.pathData}
+                    color={elem.fill}
+                  />
+                ))}
+              </div>
+              <div className="CommentBlock">
+                <CommentBlockImg />
+                <CommentDescription
+                  owner="Карина Савина"
+                  text="Этот текст комментария..."
+                  reply="Ответить"
+                />
+                <Span />
+                <PostIconWrapper
+                  className="icon-like"
+                  viewBox="0 0 23 23"
+                  pathData="M11.5 23L9.8325 21.3455C3.91 15.4921 0 11.6191 0 6.89373C0 3.02071 2.783 0 6.325 0C8.326 0 10.2465 1.01526 11.5 2.60708C12.7535 1.01526 14.674 0 16.675 0C20.217 0 23 3.02071 23 6.89373C23 11.6191 19.09 15.4921 13.1675 21.3455L11.5 23Z"
+                />
+              </div>
+              <RepostSvg className="icon-more" />
+            </div>
+          </main>
+          <aside className="RightSide">
+            <div className="bio">
+              <div className="bio__data">
+                {bioData.map((elem) => (
+                  <DataItem
+                    className={elem.className}
+                    viewBox={elem.viewBox}
+                    pathData={elem.pathData}
+                    mainText={elem.mainText}
+                    subText={elem.subText}
+                  />
+                ))}
+              </div>
+              <div className="bio__info">
+                {bioInfo.map((elem) => (
+                  <InfoParagraph
+                    subjectClass={elem.subjectClass}
+                    mainText={elem.mainText}
+                    subText={elem.subText}
+                  />
+                ))}
+              </div>
+              <div className="bio__buttons">
+                <Button isPrimary buttonText="Подробнее"></Button>
+                <Button isPrimary={false} buttonText="Редактировать"></Button>
               </div>
             </div>
-            <div className="PostControls">
-              {postControls.map((elem) => (
-                <PostIconWrapper
-                  iconWrap={elem.iconWrap}
-                  whatCount={elem.whatCount}
-                  count={elem.count}
-                  className={elem.className}
-                  viewBox={elem.viewBox}
-                  pathData={elem.pathData}
-                  color={elem.fill}
+            <div className="FriendsBlock">
+              <div className="Friends__title">
+                <Heading headingText="Друзья" headingType="h2" />
+                <span className="count">130</span>
+              </div>
+              <div className="Friends__wrapper">
+                {friendsList.map((elem) => (
+                  <Friend
+                    friendImg={elem.friendImg}
+                    friendName={elem.friendName}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="MusicBlock">
+              <div className="MusicBlock__title">
+                <Heading headingText="Вы недавно слушали" headingType="h2" />
+                <span>123</span>
+              </div>
+              {musicBlock.map((elem) => (
+                <MusicElem
+                  musicElemImg={elem.musicElemImg}
+                  mainText={elem.mainText}
+                  secondaryText={elem.secondaryText}
                 />
               ))}
             </div>
-            <div className="CommentBlock">
-              <CommentBlockImg />
-              <CommentDescription
-                owner="Карина Савина"
-                text="Этот текст комментария..."
-                reply="Ответить"
-              />
-              <Span />
-              <PostIconWrapper
-                className="icon-like"
-                viewBox="0 0 23 23"
-                pathData="M11.5 23L9.8325 21.3455C3.91 15.4921 0 11.6191 0 6.89373C0 3.02071 2.783 0 6.325 0C8.326 0 10.2465 1.01526 11.5 2.60708C12.7535 1.01526 14.674 0 16.675 0C20.217 0 23 3.02071 23 6.89373C23 11.6191 19.09 15.4921 13.1675 21.3455L11.5 23Z"
-              />
-            </div>
-            <RepostSvg className="icon-more" />
-          </div>
-        </main>
-        <aside className="RightSide">
-          <div className="bio">
-            <div className="bio__data">
-              <div className="data__item">
-                <svg
-                  className="icon icon-birthday"
-                  viewBox="0 0 21 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    id="icon"
-                    d="M7.81348 3.225L9.24082 6H6.23438C5.32793 6 4.59375 5.16094 4.59375 4.125C4.59375 3.08906 5.32793 2.25 6.23438 2.25H6.32461C6.93574 2.25 7.50586 2.62031 7.81348 3.225ZM2.625 4.125C2.625 4.8 2.76855 5.4375 3.01875 6H1.3125C0.586523 6 0 6.67031 0 7.5V10.5C0 11.3297 0.586523 12 1.3125 12H19.6875C20.4135 12 21 11.3297 21 10.5V7.5C21 6.67031 20.4135 6 19.6875 6H17.9812C18.2314 5.4375 18.375 4.8 18.375 4.125C18.375 1.84687 16.759 0 14.7656 0H14.6754C13.367 0 12.1529 0.792188 11.4885 2.08125L10.5 4.00781L9.51152 2.08594C8.84707 0.792188 7.63301 0 6.32461 0H6.23438C4.24102 0 2.625 1.84687 2.625 4.125ZM16.4062 4.125C16.4062 5.16094 15.6721 6 14.7656 6H11.7592L13.1865 3.225C13.4982 2.62031 14.0643 2.25 14.6754 2.25H14.7656C15.6721 2.25 16.4062 3.08906 16.4062 4.125ZM1.3125 13.5V21.75C1.3125 22.9922 2.19434 24 3.28125 24H9.1875V13.5H1.3125ZM11.8125 24H17.7188C18.8057 24 19.6875 22.9922 19.6875 21.75V13.5H11.8125V24Z"
-                    fill="#526ED3"
-                  />
-                </svg>
-                <p className="main__text">
-                  День рождения: <span>9 августа</span>
-                </p>
-              </div>
-              <div className="data__item">
-                <svg
-                  className="icon icon-location"
-                  viewBox="0 0 19 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    id="icon"
-                    d="M9.5 12C10.1531 12 10.7124 11.7648 11.1779 11.2944C11.6434 10.824 11.8758 10.2592 11.875 9.6C11.875 8.94 11.6423 8.3748 11.1767 7.9044C10.7112 7.434 10.1523 7.1992 9.5 7.2C8.84688 7.2 8.28756 7.4352 7.82206 7.9056C7.35656 8.376 7.12421 8.9408 7.125 9.6C7.125 10.26 7.35775 10.8252 7.82325 11.2956C8.28875 11.766 8.84767 12.0008 9.5 12ZM9.5 24C6.31354 21.26 3.93379 18.7152 2.36075 16.3656C0.787708 14.016 0.000791667 11.8408 0 9.84C0 6.84 0.955146 4.45 2.86544 2.67C4.77573 0.89 6.98725 0 9.5 0C12.0135 0 14.2255 0.89 16.1357 2.67C18.046 4.45 19.0008 6.84 19 9.84C19 11.84 18.2131 14.0152 16.6392 16.3656C15.0654 18.716 12.6857 21.2608 9.5 24Z"
-                    fill="#526ED3"
-                  />
-                </svg>
-                <p className="main__text">
-                  Город: <span>Ташкент</span>
-                </p>
-              </div>
-              <div className="data__item">
-                <svg
-                  className="icon icon-heart"
-                  viewBox="0 0 23 23"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    id="icon"
-                    d="M11.5 23L9.8325 21.3455C3.91 15.4921 0 11.6191 0 6.89373C0 3.02071 2.783 0 6.325 0C8.326 0 10.2465 1.01526 11.5 2.60708C12.7535 1.01526 14.674 0 16.675 0C20.217 0 23 3.02071 23 6.89373C23 11.6191 19.09 15.4921 13.1675 21.3455L11.5 23Z"
-                    fill="#526ED3"
-                  />
-                </svg>
-                <p className="main__text">
-                  Статус: <span>Не указано</span>
-                </p>
-              </div>
-            </div>
-            <div className="bio__info">
-              <p className="main__text education">Образование</p>
-              <p className="secondary__text education">
-                Филиал университета нефти и газа им. Губкина в Ташкенте
-              </p>
-              <p className="main__text activity">Деятельность</p>
-              <p className="secondary__text activity">Фотограф</p>
-              <p className="main__text hobby">Хобби</p>
-              <p className="secondary__text hobby">Танцы</p>
-            </div>
-            <div className="bio__buttons">
-              <button className="primary">Подробнее</button>
-              <button className="secondary">Редактировать </button>
-            </div>
-          </div>
-          <div className="FriendsBlock">
-            <div className="Friends__title">
-              <h2>Друзья</h2>
-              <span className="count">130</span>
-            </div>
-            <div className="Friends__wrapper">
-              <div className="friend">
-                <img src="./img/users/aleksandr-maykov.jpeg" alt="Friend" />
-                <span className="friend__name">Александр</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/sofia-kodra.jpeg" alt="Friend" />
-                <span className="friend__name">Софья</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/andrey-kashirskiy.jpeg" alt="Friend" />
-                <span className="friend__name">Андрей</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/darya-gertner.jpeg" alt="Friend" />
-                <span className="friend__name">Дарья</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/denis-frolov.jpeg" alt="Friend" />
-                <span className="friend__name">Денис</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/mark-krahmalev.jpeg" alt="Friend" />
-                <span className="friend__name">Марк</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/katarina-fisher.jpeg" alt="Friend" />
-                <span className="friend__name">Катарина</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/viktoria.jpeg" alt="Friend" />
-                <span className="friend__name">Виктория</span>
-              </div>
-              <div className="friend">
-                <img src="./img/users/gleb.jpeg" alt="Friend" />
-                <span className="friend__name">Глеб</span>
-              </div>
-            </div>
-          </div>
-          <div className="MusicBlock">
-            <div className="MusicBlock__title">
-              <h2>Вы недавно слушали</h2>
-              <span>123</span>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-1.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">Pieces</p>
-                <p className="secondary__text">Andrew Belle</p>
-              </div>
-              <div className="plus-button _active"></div>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-2.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">In the Wind</p>
-                <p className="secondary__text">On-The-Go</p>
-              </div>
-              <div className="plus-button"></div>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-3.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">On you own</p>
-                <p className="secondary__text">Meltt</p>
-              </div>
-              <div className="plus-button _active"></div>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-4.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">Infinity</p>
-                <p className="secondary__text">James Young</p>
-              </div>
-              <div className="plus-button"></div>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-5.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">Let me follow</p>
-                <p className="secondary__text">Son Lux</p>
-              </div>
-              <div className="plus-button _active"></div>
-            </div>
-            <div className="MusicElem">
-              <img src="./img/music/album-6.png" alt="Album" />
-              <div className="music__description">
-                <p className="main__text">Youth</p>
-                <p className="secondary__text">Glass Animals</p>
-              </div>
-              <div className="plus-button"></div>
-            </div>
-          </div>
-        </aside>
-      </div>
+          </aside>
+        </div>
+      </StyleProfilePage>
     </Container>
   );
 };
