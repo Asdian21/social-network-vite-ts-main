@@ -6,7 +6,6 @@ import { Button } from "../../components/UI/Button/Button";
 import { Container } from "../../components/UI/Container/container.style";
 import { RegistrationInfo } from "../../components/UI/RegistrationInfo/RegistrationInfo";
 import { Input } from "../../components/UI/Input/InputWord";
-import "./LoginPage.scss";
 import { StyleLoginPage } from "./LogiPage.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
