@@ -1,12 +1,18 @@
 // Это банк, в котором есть разные ячейки, с разными действиями. Слайсы объединяются здесь.
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
+import { authApi } from "./Api/authApi";
 
 export const store = configureStore({
   reducer: {
     userSlice,
+    [authApi.reducerPath]: authApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([authApi.middleware]),
 });
+
+// middleware - некоторая инструкция для backend?, которая обрабатывает данные
 
 // Для типизации и подсказок добавляем эти строки:
 

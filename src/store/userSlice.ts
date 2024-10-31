@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 export interface IUser {
   mail: string;
@@ -9,8 +10,13 @@ export interface IUser {
   city: string;
 }
 
+export interface IChangeUserPayload {
+  useremail: string;
+  userpassword: string;
+}
+
 export interface IUserStateProps {
-  user: null | IUser; // Здесь будет храниться либо пустое значение, либо значения из IUser
+  user: null | IChangeUserPayload; // Здесь будет храниться либо пустое значение, либо значения из IUser
 }
 
 export const initialState: IUserStateProps = {
@@ -21,7 +27,7 @@ export const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
-    changeUser(state, action) {
+    changeUser(state, action: PayloadAction<IChangeUserPayload>) {
       state.user = action.payload;
     },
   },

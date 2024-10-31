@@ -1,29 +1,19 @@
-import { StyleInput, ErrorMassage } from "./Input.style";
+import React, { forwardRef } from "react";
 
-interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  type: string;
+  placeholder: string;
   errorText?: string;
   isError?: boolean;
-  id?: string;
 }
 
-export const Input = ({
-  type,
-  placeholder,
-  errorText,
-  isError,
-  id,
-  ...props
-}: IInput) => {
-  return (
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ type, placeholder, errorText, isError, ...props }, ref) => (
     <div>
-      <StyleInput
-        $isError={isError}
-        type={type}
-        placeholder={placeholder}
-        id={id}
-        {...props}
-      />
-      {isError && <ErrorMassage>{errorText}</ErrorMassage>}
+      <input type={type} placeholder={placeholder} ref={ref} {...props} />
+      {isError && <span>{errorText}</span>}
     </div>
-  );
-};
+  )
+);
+
+Input.displayName = "Input";

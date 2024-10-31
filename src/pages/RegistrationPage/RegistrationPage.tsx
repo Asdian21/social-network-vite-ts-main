@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { Heading } from "../../components/Header/Heading";
 import * as yup from "yup";
 import { Linktext } from "../../components/Header/Typography/LinkText/Linktext";
@@ -9,28 +9,34 @@ import { Input } from "../../components/UI/Input/InputWord";
 import { StyleRegistrationPage } from "./RegistrationPage.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRegisterUserMutation } from "../../store/Api/authApi";
 
 interface IRegistrationForm {
-  userEmail: string;
-  userPhone: string;
-  userPassword: string;
+  username: string;
+  useremail: string;
+  userphone: string;
+  userpassword: string;
+  usercity: string;
 }
 
-
 const registrationFormSchema = yup.object({
-  userEmail: yup.string().required("Обязательное поле"),
-  userPhone: yup
+  username: yup.string().required("Обязательное поле"),
+  useremail: yup.string().required("Обязательное поле"),
+  userphone: yup
     .string()
     .required("Обязательное поле")
     .matches(/^\+?[0-9]{10,15}$/, "Некорректный номер телефона"),
-  userPassword: yup
+  userpassword: yup
     .string()
     .required("Обязательное поле")
     .min(4, "Пароль должен содержать не менее 4 символов"),
+  usercity: yup.string().required("Обязательное поле"),
 });
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
+
+  const [registrationUser, { data: newData }] = useRegisterUserMutation();
 
   const {
     control,
@@ -39,18 +45,24 @@ export const RegistrationPage = () => {
   } = useForm<IRegistrationForm>({
     resolver: yupResolver(registrationFormSchema),
     defaultValues: {
-      userEmail: "",
-      userPhone: "",
-      userPassword: "",
+      username: "",
+      useremail: "",
+      userphone: "",
+      userpassword: "",
+      usercity: "",
     },
   });
 
   const onRegisterSubmit: SubmitHandler<IRegistrationForm> = (data) => {
-    
-    const userData = [data.userEmail, data.userPhone, data.userPassword];
+    registrationUser({
+      name: data.username,
+      email: data.useremail,
+      phone_number: data.userphone,
+      password: data.userpassword,
+      user_city: data.usercity,
+    });
 
-    
-    localStorage.setItem("userData", JSON.stringify(userData));
+    localStorage.setItem("userData", JSON.stringify(registrationUser));
 
     console.log("Регистрация завершена:", data);
     navigate("/password-page");
@@ -62,45 +74,71 @@ export const RegistrationPage = () => {
         <Heading headingText="Регистрация" />
         <form onSubmit={handleSubmit(onRegisterSubmit)}>
           <Controller
-            name="userEmail"
+            name="username"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                placeholder="Ваше имя"
+                errorText={errors.username?.message}
+                isError={!!errors.username}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="useremail"
             control={control}
             render={({ field }) => (
               <Input
                 type="text"
                 placeholder="Электронная почта"
-                errorText={errors.userEmail?.message}
-                isError={!!errors.userEmail}
+                errorText={errors.useremail?.message}
+                isError={!!errors.useremail}
                 {...field}
               />
             )}
           />
           <Controller
-            name="userPhone"
+            name="userphone"
             control={control}
             render={({ field }) => (
               <Input
                 type="tel"
                 placeholder="Номер телефона"
-                errorText={errors.userPhone?.message}
-                isError={!!errors.userPhone}
+                errorText={errors.userphone?.message}
+                isError={!!errors.userphone}
                 {...field}
               />
             )}
           />
           <Controller
-            name="userPassword"
+            name="userpassword"
             control={control}
             render={({ field }) => (
               <Input
                 type="password"
                 placeholder="Пароль"
-                errorText={errors.userPassword?.message}
-                isError={!!errors.userPassword}
+                errorText={errors.userpassword?.message}
+                isError={!!errors.userpassword}
                 {...field}
               />
             )}
           />
-          <Button isPrimary buttonText="Зарегистрироваться" />
+          <Controller
+            name="usercity"
+            control={control}
+            render={({ field }) => (
+              <Input
+                type="text"
+                placeholder="Ваш город"
+                errorText={errors.usercity?.message}
+                isError={!!errors.usercity}
+                {...field}
+              />
+            )}
+          />
+          <Button $isPrimary buttonText="Зарегистрироваться" />
         </form>
         <Linktext
           regularText="Уже есть аккаунт?"

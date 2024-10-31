@@ -1,14 +1,18 @@
-import { SButton } from "./Button.style";
+import styled from "styled-components";
 
-interface TButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    buttonText: string;
-    isPrimary?: boolean;
+interface ButtonProps {
+  $isPrimary?: boolean;
+  buttonText: string;
 }
 
-export const Button = ({ buttonText, isPrimary, ...props }: TButton) => {
-    return (
-        <SButton isPrimary={isPrimary} {...props}> 
-            {buttonText} 
-        </SButton>
-    );
-};
+const StyledButton = styled.button<{ $isPrimary?: boolean }>`
+  background-color: ${({ $isPrimary }) => ($isPrimary ? "blue" : "gray")};
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+`;
+
+export const Button: React.FC<ButtonProps> = ({ $isPrimary, buttonText }) => (
+  <StyledButton $isPrimary={$isPrimary}>{buttonText}</StyledButton>
+);
