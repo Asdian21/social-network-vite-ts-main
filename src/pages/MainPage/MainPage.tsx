@@ -12,7 +12,7 @@ import { AddHistorySvg } from "../../components/Main/History/HistoryWrapper/AddH
 import { AddHistoryImg } from "../../components/Main/History/HistoryWrapper/AddHistoryImg";
 import { HistoryItem } from "../../components/Main/History/HistoryItem";
 import { PostUserElem } from "../../components/Main/Post/PostUserElement";
-import { PostText } from "../../components/Main/Post/PostText";
+// import { PostText } from "../../components/Main/Post/PostText";
 import { PostMediaItem } from "../../components/Main/Post/PostMediaItem";
 import { PostIconWrapper } from "../../components/Main/PostRepost/PostIconWrapper";
 import { CommentBlockImg } from "../../components/Main/PostRepost/CommentBlockImg";
@@ -20,9 +20,13 @@ import { CommentDescription } from "../../components/Main/PostRepost/CommentDesc
 import { Span } from "../../components/Main/PostRepost/Span";
 import { RepostSvg } from "../../components/Main/PostRepost/RepostSvg";
 import { MusicElem } from "../../components/Aside/List/MusicElem";
-import { CommentBlockSvg } from "../../components/Main/PostRepost/CommentBlockSvg";
+// import { CommentBlockSvg } from "../../components/Main/PostRepost/CommentBlockSvg";
+import { PostItem } from "../../components/PostItem/PostItem";
+import { useGetPostListQuery } from "../../store/Api/postApi";
 
 export const MainPage = () => {
+  const { data: postList } = useGetPostListQuery(null);
+
   const navbarItems = [
     {
       iconClass: "icon-profile",
@@ -211,26 +215,26 @@ export const MainPage = () => {
     },
   ];
 
-  const mediaContainer = [
-    {
-      imgPost: "./img/post/nature-1.png",
-    },
-    {
-      imgPost: "./img/post/nature-2.png",
-    },
-    {
-      imgPost: "./img/post/nature-3.png",
-    },
-    {
-      imgPost: "./img/post/nature-4.png",
-    },
-    {
-      imgPost: "./img/post/nature-5.png",
-    },
-    {
-      imgPost: "./img/post/nature-6.png",
-    },
-  ];
+  // const mediaContainer = [
+  //   {
+  //     imgPost: "./img/post/nature-1.png",
+  //   },
+  //   {
+  //     imgPost: "./img/post/nature-2.png",
+  //   },
+  //   {
+  //     imgPost: "./img/post/nature-3.png",
+  //   },
+  //   {
+  //     imgPost: "./img/post/nature-4.png",
+  //   },
+  //   {
+  //     imgPost: "./img/post/nature-5.png",
+  //   },
+  //   {
+  //     imgPost: "./img/post/nature-6.png",
+  //   },
+  // ];
 
   const postControls = [
     {
@@ -330,7 +334,7 @@ export const MainPage = () => {
         <aside className="LeftSide">
           <nav className="Navbar">
             <ul className="navbar__list">
-              {navbarItems.map((elem) => (
+              {navbarItems.map((elem, index) => (
                 <NavbarItem
                   iconClass={elem.iconClass}
                   viewBox={elem.viewBox}
@@ -338,6 +342,7 @@ export const MainPage = () => {
                   secondPath={elem.secondPath}
                   name={elem.name}
                   badgeCount={elem.badgeCount}
+                  key={index}
                 />
               ))}
             </ul>
@@ -347,12 +352,13 @@ export const MainPage = () => {
               <Heading headingText="Подписки" headingType="h2" />
               <span className="count">123</span>
             </div>
-            {userElems.map((elem) => (
+            {userElems.map((elem, index) => (
               <UserElem
                 userElemImg={elem.userElemImg}
                 mainText={elem.mainText}
                 secondaryText={elem.secondaryText}
                 badgeCount={elem.badgeCount}
+                key={index}
               />
             ))}
           </div>
@@ -367,11 +373,12 @@ export const MainPage = () => {
               placeholder="Что у вас нового?"
             />
             <div className="icons-wrapper">
-              {whatsNew.map((elem) => (
+              {whatsNew.map((elem, index) => (
                 <WhatsNewIcons
                   iconType={elem.iconType}
                   viewBoxNum={elem.viewBoxNum}
                   pathData={elem.pathData}
+                  key={index}
                 />
               ))}
             </div>
@@ -386,16 +393,27 @@ export const MainPage = () => {
                 </div>
                 <AddHistoryImg />
               </div>
-              {historyItems.map((elem) => (
+              {historyItems.map((elem, index) => (
                 <HistoryItem
                   historyPoster={elem.historyPoster}
                   userImg={elem.userImg}
                   ownerName={elem.ownerName}
+                  key={index}
                 />
               ))}
             </div>
           </div>
-          <div className="Post _liked _marked">
+
+          {postList?.message.length &&
+            postList.message.map((elem) => (
+              <PostItem
+                postText={elem.main_text}
+                userName={elem.user_fk.name}
+                regDate={elem.reg_date}
+                key={elem.id}
+              />
+            ))}
+          {/* <div className="Post _liked _marked">
             <PostUserElem
               userElemImg="./img/users/aleksandr-maykov.jpeg"
               mainText="Александр Майков"
@@ -431,7 +449,7 @@ export const MainPage = () => {
               <CommentBlockSvg />
             </div>
             <RepostSvg className="icon-more" />
-          </div>
+          </div> */}
           <div className="Post Repost _liked _marked">
             <PostUserElem
               userElemImg="./img/users/mark-krahmalev.jpeg"
@@ -450,7 +468,7 @@ export const MainPage = () => {
               </div>
             </div>
             <div className="PostControls">
-              {postControls.map((elem) => (
+              {postControls.map((elem, index) => (
                 <PostIconWrapper
                   iconWrap={elem.iconWrap}
                   whatCount={elem.whatCount}
@@ -459,6 +477,7 @@ export const MainPage = () => {
                   viewBox={elem.viewBox}
                   pathData={elem.pathData}
                   color={elem.fill}
+                  key={index}
                 />
               ))}
             </div>
@@ -485,12 +504,13 @@ export const MainPage = () => {
               <Heading headingText="Близкие друзья" headingType="h2" />
               <span className="count">123</span>
             </div>
-            {rightList.map((elem) => (
+            {rightList.map((elem, index) => (
               <UserElem
                 userElemImg={elem.userElemImg}
                 mainText={elem.mainText}
                 secondaryText={elem.secondaryText}
                 badgeCount={elem.badgeCount}
+                key={index}
               />
             ))}
           </div>
@@ -499,11 +519,12 @@ export const MainPage = () => {
               <h2>Вы недавно слушали</h2>
               <span>123</span>
             </div>
-            {musicBlock.map((elem) => (
+            {musicBlock.map((elem, index) => (
               <MusicElem
                 musicElemImg={elem.musicElemImg}
                 mainText={elem.mainText}
                 secondaryText={elem.secondaryText}
+                key={index}
               />
             ))}
           </div>
