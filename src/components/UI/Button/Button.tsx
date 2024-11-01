@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SButton } from "./Button.style";
 
 interface ButtonProps {
   $isPrimary?: boolean;
