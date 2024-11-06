@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../utils/baseUrl";
 
-interface IPost {
+export interface IPost {
   main_text: string;
   user_id: number;
   id: number;
@@ -19,55 +19,72 @@ interface IPost {
   comments: string[];
 }
 
-interface IGetPostResponse {
+interface IGetPostListResponse {
   status: number;
   message: IPost[];
 }
 
-interface IRegisterUserResponse {
+interface IGetPostListByIdResponse {
   status: number;
+  message: IPost;
+}
+
+interface IAddPostPayload {
   user_id: number;
+  main_text: string;
 }
 
-interface INewPostUserPayload {
-  email: string;
-  password: string;
+interface IAddPostResponse {
+  status: number;
+  post_id: string;
 }
 
-interface INewPostUserResponse extends IRegisterUserResponse {}
-
-interface IPutProfilePayload {
-  user_id: number;
-  change_info: string;
-  new_data: string;
+interface IEditPostPayload {
+  post_id: number;
+  new_text: "string";
 }
 
-interface IDeleteUserPostResponse extends IGetPostResponse {}
+interface IEditPostResponse {
+  status: number;
+  message: string;
+}
+
+interface IDeletePayload {
+  post_id: number;
+}
+
+interface IDeleteResponse {
+  status: number;
+  message: string;
+}
 
 export const postApi = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   endpoints: (builder) => ({
-    getPostList: builder.query<IGetPostResponse, null>({
+    getPostList: builder.query<IGetPostListResponse, null>({
       query: (postId) => `/post?post_id=${postId}`,
     }),
-    newPostUser: builder.mutation<INewPostUserResponse, INewPostUserPayload>({
+    getPostListById: builder.query<IGetPostListByIdResponse, string>({
+      query: (postId) => `post?post_id=${postId}`,
+    }),
+    addNewPost: builder.mutation<IAddPostResponse, IAddPostPayload>({
       query: (payload) => ({
         url: "/post",
         method: "POST",
         body: payload,
       }),
     }),
-    putPostUser: builder.mutation<string, IPutProfilePayload>({
+    editPost: builder.mutation<IEditPostResponse, IEditPostPayload>({
       query: (payload) => ({
-        url: "/change-profile",
+        url: `/post`,
         method: "PUT",
         body: payload,
       }),
     }),
-    deleteUserPost: builder.mutation<IDeleteUserPostResponse, string>({
+    deletePost: builder.mutation<IDeleteResponse, IDeletePayload>({
       query: (payload) => ({
-        url: "/delete",
+        url: "/post",
         method: "DELETE",
         body: payload,
       }),
@@ -78,7 +95,8 @@ export const postApi = createApi({
 export const {
   useGetPostListQuery,
   useLazyGetPostListQuery,
-  useNewPostUserMutation,
-  usePutPostUserMutation,
-  useDeleteUserPostMutation,
+  useLazyGetPostListByIdQuery,
+  useAddNewPostMutation,
+  useEditPostMutation,
+  useDeletePostMutation,
 } = postApi;

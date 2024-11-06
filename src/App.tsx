@@ -6,6 +6,7 @@ import { WrongPassword } from "./pages/WrongPassword/WrongPassword";
 import { CodeEnter } from "./pages/CodeEnter/CodeEnter";
 import { ForgotPasswordPage } from "./pages/PasswordPage/ForgotPasswordPage";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
+import { PostPage } from "./pages/PostPage/PostPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ function App() {
     {
       path: "/profile-page",
       element: <ProfilePage />,
+    },
+    {
+      path: "/post/:postId",
+      element: <PostPage />,
     },
   ]);
 

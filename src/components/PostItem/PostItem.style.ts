@@ -67,3 +67,22 @@ export const StylePost = styled.div<IStyleProps>`
     margin-bottom: 20px;
   }
 `;
+
+export const StylePostSettings = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 2px solid black;
+  border-radius: 30px;
+  display: flex;
+  padding: 10px 15px;
+  .settingBtn {
+    border-radius: 30px;
+
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: orange;
+    }
+  }
+`;
