@@ -2,8 +2,8 @@ import React, { forwardRef } from "react";
 import { StyleInput, ErrorMassage } from "./Input.style";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type: string;
-  placeholder: string;
+  type?: string;
+  placeholder?: string;
   errorText?: string;
   isError?: boolean;
 }

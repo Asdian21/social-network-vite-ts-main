@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { SButton } from "./Button.style";
 
 interface ButtonProps {
   $isPrimary?: boolean;
   buttonText: string;
+  type?: string;
+  onClick?: () => void;
 }
 
 const StyledButton = styled.button<{ $isPrimary?: boolean }>`

@@ -2,7 +2,12 @@ import Modal from "react-modal";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { IPost } from "../../store/Api/postApi";
+import { IPost, useAddNewPostMutation } from "../../store/Api/postApi";
+import { SPostForm } from "./PostPage.style";
+import { SPostButtonsContainer } from "./PostPage.style";
+import { Input } from "../../components/UI/Input/InputWord";
+import { Button } from "../../components/UI/Button/Button";
+import { useUserId } from "../../hooks/useUserId";
 
 const customStyles = {
   content: {
@@ -31,15 +36,63 @@ export const AddNewPost = ({
   post,
 }: IAddNewPostProps) => {
   const {
-    formState: { errors }, // нужен для того, чтобы использовать
+    formState: { errors },
     handleSubmit,
     control,
   } = useForm({
-    resolver: yupResolver(AddNewPostScheme), // подключение объекта с ошибками ( проверкой )
+    resolver: yupResolver(AddNewPostScheme),
     defaultValues: {
-      mainText: "", // первоначальное состояние
+      mainText: "",
     },
   });
 
-  return <Modal isOpen={openModal} style={customStyles}></Modal>;
+  const userId = useUserId();
+  // console.log(userId);
+  const [fetchTrigger, { data, isSuccess }] = useAddNewPostMutation();
+  const addNewPostSubmit: SubmitHandler<{ mainText: string }> = (data) => {
+    if (data) {
+      const payload = {
+        user_id: Number(userId),
+        main_text: data.mainText,
+      };
+      fetchTrigger(payload);
+      onCloseModal();
+    }
+    if (isSuccess) {
+      onCloseModal();
+      openModal = false;
+    }
+  };
+
+  return (
+    <Modal isOpen={openModal} style={customStyles}>
+      <SPostForm onSubmit={handleSubmit(addNewPostSubmit)}>
+        <h3>Ваш пост</h3>
+        <Controller
+          name="mainText"
+          control={control}
+          render={({ field }) => (
+            <Input
+              type="text"
+              placeholder="Электронная почта"
+              errorText={errors.mainText?.message}
+              isError={Boolean(errors.mainText)}
+              {...field}
+            />
+          )}
+        />
+
+        <SPostButtonsContainer>
+          <Button buttonText="Сохранить" type="button" $isPrimary />
+          <Button
+            buttonText="Отменить"
+            onClick={() => {
+              onCloseModal();
+            }}
+            $isPrimary
+          />
+        </SPostButtonsContainer>
+      </SPostForm>
+    </Modal>
+  );
 };

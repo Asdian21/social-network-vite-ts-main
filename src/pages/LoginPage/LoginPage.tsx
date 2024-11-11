@@ -50,7 +50,9 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (newData?.user_id) {
-      console.log(newData);
+      navigate("/main-page");
+      localStorage.setItem("newData", JSON.stringify(newData.user_id));
+      console.log(newData.user_id);
     }
   }, [newData, navigate]);
   // добавляем navigate в зависимости для useEffect
