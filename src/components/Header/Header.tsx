@@ -3,9 +3,18 @@ import { AddNewPost } from "../../pages/PostPage/AddNewPost";
 import { Input } from "../UI/Input/InputWord";
 import "./Header.scss";
 
-export const Header = () => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+type HeadersProps = {
+  onNewPostAdded: () => void;
+};
 
+export const Header = ({ onNewPostAdded }: HeadersProps) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
+    if (typeof onNewPostAdded === "function") {
+      onNewPostAdded;
+    }
+  };
   return (
     <header className="Header">
       <div className="Header__logo">
@@ -89,7 +98,6 @@ export const Header = () => {
             />
           </g>
         </svg>
-
         <svg
           className="icon icon-bell"
           viewBox="0 0 23 26"
@@ -116,7 +124,10 @@ export const Header = () => {
           />
         </svg>
       </div>
-      <AddNewPost openModal={isOpenModal} />
+      <AddNewPost
+        openModal={isOpenModal}
+        onCloseModal={() => handleCloseModal()}
+      />
     </header>
   );
 };

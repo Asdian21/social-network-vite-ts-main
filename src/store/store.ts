@@ -14,7 +14,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat([authApi.middleware, postApi.middleware]),
 });
 
-// middleware - некоторая инструкция для backend, которая обрабатывает данные
+// middleware - некоторая инструкция для backend?, которая обрабатывает данные
 
 // Для типизации и подсказок добавляем эти строки:
 

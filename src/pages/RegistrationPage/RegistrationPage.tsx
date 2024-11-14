@@ -10,6 +10,7 @@ import { StyleRegistrationPage } from "./RegistrationPage.style";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegisterUserMutation } from "../../store/Api/authApi";
+import { useEffect } from "react";
 
 interface IRegistrationForm {
   username: string;
@@ -18,6 +19,11 @@ interface IRegistrationForm {
   userpassword: string;
   usercity: string;
 }
+//   "name": "string",
+//   "email": "string",
+//   "phone_number": "string",
+//   "password": "string",
+//   "user_city": "string"
 
 const registrationFormSchema = yup.object({
   username: yup.string().required("Обязательное поле"),
@@ -35,9 +41,7 @@ const registrationFormSchema = yup.object({
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
-
-  const [registrationUser, { data: newData }] = useRegisterUserMutation();
-
+  const [registrationUser, { data: newData,isLoading,isSuccess }] = useRegisterUserMutation();
   const {
     control,
     handleSubmit,
@@ -58,19 +62,17 @@ export const RegistrationPage = () => {
       name: data.username,
       email: data.useremail,
       phone_number: data.userphone,
-      password: data.userpassword,
-      user_city: data.usercity,
+      password:data.userpassword,
+      user_city:data.usercity,
     });
-
-    localStorage.setItem("userData", JSON.stringify(registrationUser));
-
-    console.log("Регистрация завершена:", data);
-    navigate("/password-page");
   };
+
 
   return (
     <Container>
+      {isLoading&& <div>Загрузка,,,</div>}
       <StyleRegistrationPage>
+
         <Heading headingText="Регистрация" />
         <form onSubmit={handleSubmit(onRegisterSubmit)}>
           <Controller
@@ -79,7 +81,7 @@ export const RegistrationPage = () => {
             render={({ field }) => (
               <Input
                 type="text"
-                placeholder="Ваше имя"
+                placeholder="Ваще имя"
                 errorText={errors.username?.message}
                 isError={!!errors.username}
                 {...field}
@@ -130,7 +132,7 @@ export const RegistrationPage = () => {
             control={control}
             render={({ field }) => (
               <Input
-                type="text"
+                type="password"
                 placeholder="Ваш город"
                 errorText={errors.usercity?.message}
                 isError={!!errors.usercity}
@@ -138,7 +140,7 @@ export const RegistrationPage = () => {
               />
             )}
           />
-          <Button $isPrimary buttonText="Зарегистрироваться" />
+          <Button isPrimary buttonText="Зарегистрироваться" />
         </form>
         <Linktext
           regularText="Уже есть аккаунт?"

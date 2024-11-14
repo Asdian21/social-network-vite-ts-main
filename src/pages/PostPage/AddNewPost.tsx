@@ -3,8 +3,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { IPost, useAddNewPostMutation } from "../../store/Api/postApi";
-import { SPostForm } from "./PostPage.style";
-import { SPostButtonsContainer } from "./PostPage.style";
+import { SPostForm, SPostButtonsContainer } from "./PostPage.style";
 import { Input } from "../../components/UI/Input/InputWord";
 import { Button } from "../../components/UI/Button/Button";
 import { useUserId } from "../../hooks/useUserId";
@@ -17,18 +16,17 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    borderRadius: "20px",
   },
 };
-
 const AddNewPostScheme = yup.object({
   mainText: yup.string().required("Введите содержимое поста"),
 });
-
-interface IAddNewPostProps {
+type IAddNewPostProps = {
   openModal: boolean;
   onCloseModal: () => void;
   post?: IPost;
-}
+};
 
 export const AddNewPost = ({
   openModal,
@@ -45,9 +43,9 @@ export const AddNewPost = ({
       mainText: "",
     },
   });
-
   const userId = useUserId();
-  // console.log(userId);
+
+  console.log(userId);
   const [fetchTrigger, { data, isSuccess }] = useAddNewPostMutation();
   const addNewPostSubmit: SubmitHandler<{ mainText: string }> = (data) => {
     if (data) {
@@ -55,12 +53,12 @@ export const AddNewPost = ({
         user_id: Number(userId),
         main_text: data.mainText,
       };
+
       fetchTrigger(payload);
       onCloseModal();
     }
     if (isSuccess) {
       onCloseModal();
-      openModal = false;
     }
   };
 
@@ -81,15 +79,13 @@ export const AddNewPost = ({
             />
           )}
         />
-
         <SPostButtonsContainer>
-          <Button buttonText="Сохранить" type="button" $isPrimary />
+          <Button buttonText="Сохранить" type="submit" isPrimary />
           <Button
             buttonText="Отменить"
-            onClick={() => {
-              onCloseModal();
-            }}
-            $isPrimary
+            isPrimary
+            type="button"
+            onClick={onCloseModal}
           />
         </SPostButtonsContainer>
       </SPostForm>

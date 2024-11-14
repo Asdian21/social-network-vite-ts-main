@@ -1,20 +1,19 @@
 import styled, { css } from "styled-components";
-
-interface IStyleProps {
-  $isLiked?: boolean;
+interface IStyledPostProps {
+  $isliked?: boolean;
   $isMarked?: boolean;
 }
 
-export const StylePost = styled.div<IStyleProps>`
+export const StylePost = styled.div<IStyledPostProps>`
   box-shadow: 0 0 10px ${(props) => props.theme.colors.lightGray};
   padding: calc(1vw + 11px);
-  background-color: ${(props) => props.theme.colors.bgc};
+  background-color: ${(props) => props.theme.colors.elemsBgc};
   border-radius: 20px;
   margin-bottom: 20px;
 
   position: relative;
   ${(props) =>
-    props.$isLiked &&
+    props.$isliked &&
     css`
       .icon-wrapper {
         .icon-like {
@@ -28,7 +27,6 @@ export const StylePost = styled.div<IStyleProps>`
         }
       }
     `}
-
   ${(props) =>
     props.$isMarked &&
     css`
@@ -40,6 +38,7 @@ export const StylePost = styled.div<IStyleProps>`
         }
       }
     `}
+ 
 
   .UserElem {
     cursor: default;
@@ -67,22 +66,21 @@ export const StylePost = styled.div<IStyleProps>`
     margin-bottom: 20px;
   }
 `;
-
 export const StylePostSettings = styled.div`
   position: absolute;
-  top: 0;
+  top: 55px;
   right: 0;
-  border: 2px solid black;
-  border-radius: 30px;
+  background-color: gray;
   display: flex;
-  padding: 10px 15px;
+  border-radius: 30px;
   .settingBtn {
     border-radius: 30px;
-
+    padding: 10px 15px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all.3s;
     &:hover {
       background-color: orange;
+      color: white;
     }
   }
 `;

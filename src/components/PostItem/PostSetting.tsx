@@ -1,6 +1,6 @@
 import { StylePostSettings } from "./PostItem.style";
 
-interface PostSettingProps {
+interface PostSettingsProps {
   onEditClick?: () => void;
   onDeleteClick?: () => void;
 }
@@ -8,17 +8,15 @@ interface PostSettingProps {
 export const PostSetting = ({
   onEditClick,
   onDeleteClick,
-}: PostSettingProps) => {
+}: PostSettingsProps) => {
   return (
     <StylePostSettings>
-      <div>
-        <span onClick={onEditClick} className="settingBtn">
-          Изменить
-        </span>
-        <span onClick={onDeleteClick} className="settingBtn">
-          Удалить
-        </span>
-      </div>
+      <span onClick={onEditClick} className="settingBtn">
+        Изменить
+      </span>
+      <span onClick={onDeleteClick} className="settingBtn">
+        Удалить
+      </span>
     </StylePostSettings>
   );
 };

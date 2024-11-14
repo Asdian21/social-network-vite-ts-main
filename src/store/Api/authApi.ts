@@ -20,7 +20,9 @@ interface ILoginUserPayload {
   password: string;
 }
 
-interface ILoginUserResponse extends IRegisterUserResponse {} // Подставили один интерфейс в другой
+interface ILoginUserResponse extends IRegisterUserResponse {
+
+} 
 
 interface IGetUserResponse {
   status: 1;
@@ -74,4 +76,3 @@ export const {
   useGetUserQuery,
 } = authApi;
 
-// mutation - тип, который будешь получать, а потом тип, который будешь отправлять

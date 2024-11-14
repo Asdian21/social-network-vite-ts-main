@@ -7,12 +7,11 @@ import { CodeEnter } from "./pages/CodeEnter/CodeEnter";
 import { ForgotPasswordPage } from "./pages/PasswordPage/ForgotPasswordPage";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { PostPage } from "./pages/PostPage/PostPage";
-
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <LoginPage />,
+      path:"/",
+      element:<LoginPage/>
     },
     {
       path: "/registration-page",
@@ -39,8 +38,9 @@ function App() {
       element: <ProfilePage />,
     },
     {
-      path: "/post/:postId",
-      element: <PostPage />,
+      path:"/post/:postId",
+      element:<PostPage/>
+      
     },
   ]);
 
